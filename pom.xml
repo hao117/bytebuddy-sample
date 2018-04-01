@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.beeapm.bytebuddy.sample</groupId>
-    <artifactId>sample</artifactId>
+    <artifactId>bytebuddy-sample</artifactId>
     <version>0.0.1</version>
-    <packaging>bytebuddy-sample</packaging>
+    <packaging>pom</packaging>
     <name>bytebuddy-sample</name>
     <url>https://github.com/hao117/bytebuddy-sample</url>
-    <developers>
-        <developer>
-            <name>yuan</name>
-            <email>beetle082@163.com</email>
-        </developer>
-    </developers>
+
     <modules>
         <module>sample001</module>
     </modules>
@@ -24,4 +19,27 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler.version>1.6</compiler.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.7.11</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>1.7.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.45</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+    </dependencies>
 </project>
