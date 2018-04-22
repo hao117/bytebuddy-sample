@@ -13,6 +13,7 @@
 
     <modules>
         <module>sample001</module>
+        <module>sample002</module>
     </modules>
 
     <properties>
@@ -42,4 +43,7 @@
             <version>3.6</version>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>bytebuddy-sample</finalName>
+    </build>
 </project>
