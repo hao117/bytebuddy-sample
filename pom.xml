@@ -14,6 +14,7 @@
     <modules>
         <module>sample001</module>
         <module>sample002</module>
+        <module>sample003</module>
     </modules>
 
     <properties>
