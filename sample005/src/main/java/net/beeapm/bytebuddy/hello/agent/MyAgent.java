@@ -7,24 +7,18 @@ import net.bytebuddy.dynamic.ClassFileLocator;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassInjector;
 import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.SuperCall;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.utility.JavaModule;
 
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.util.Collections;
-import java.util.concurrent.Callable;
 
 /**
  * Created by yuan on 2018/4/1.
  */
 public class MyAgent {
     /**
-     *
-     * -javaagent:H:\workspace\java\packages\agent005.jar
-     *
      * @param arguments
      * @param inst
      */
@@ -78,7 +72,7 @@ public class MyAgent {
         public void onTransformation(TypeDescription typeDescription, ClassLoader classLoader, JavaModule module,
                                      boolean loaded, DynamicType dynamicType) {
             //修改后的类输出
-            InstrumentDebuggingClass.INSTANCE.log(typeDescription, dynamicType);
+            WeavingClassLog.INSTANCE.log(typeDescription, dynamicType);
         }
 
         @Override

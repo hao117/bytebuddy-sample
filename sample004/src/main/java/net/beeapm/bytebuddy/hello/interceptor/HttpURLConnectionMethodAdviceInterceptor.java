@@ -11,12 +11,12 @@ import java.lang.reflect.Method;
 public class HttpURLConnectionMethodAdviceInterceptor {
     //jdk的类，没法设置inline = false，inlined没法debug
     @Advice.OnMethodEnter()
-    public static void enter(@Advice.Origin Method m,@Advice.This Object ths) throws Throwable {
+    public static void enter(@Advice.Origin Method m, @Advice.This Object ths) throws Throwable {
         System.out.println("---[BEGIN] HttpURLConnectionMethodAdviceInterceptor");
     }
 
     @Advice.OnMethodExit()
-    public static void exit() throws Throwable {
+    public static void exit(@Advice.Local("start") long start) throws Throwable {
         System.out.println("---[END] HttpURLConnectionMethodAdviceInterceptor");
     }
 

@@ -2,7 +2,6 @@ package net.beeapm.bytebuddy.hello.interceptor;
 
 import net.bytebuddy.implementation.bind.annotation.*;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 /**
