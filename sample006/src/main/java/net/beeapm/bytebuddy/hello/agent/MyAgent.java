@@ -4,6 +4,8 @@ import net.beeapm.bytebuddy.hello.interceptor.InstanceMethodSpendAdviceIntercept
 import net.beeapm.bytebuddy.hello.interceptor.StaticMethodSpendAdviceInterceptor;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;
+import net.bytebuddy.asm.AsmVisitorWrapper;
+import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -34,8 +36,13 @@ public class MyAgent {
                 System.out.println("++++++++ class name = " + className);
                 try {
                     //入参长度为1的任何方法
-                    builder = builder.method(ElementMatchers.named("sayHello").and(ElementMatchers.takesArguments(1)))
-                            .intercept(Advice.to(InstanceMethodSpendAdviceInterceptor.class));
+                    //builder = builder.visit(new AsmVisitorWrapper.ForDeclaredMethods().method(ElementMatchers.named("sayGood")));
+                    //ElementMatchers.declaresMethod(ElementMatchers.<MethodDescription>any());   //ElementMatchers.<MethodDescription>any()
+                    //builder = builder.method(ElementMatchers.<MethodDescription>any())
+                    //        .intercept(Advice.to(InstanceMethodSpendAdviceInterceptor.class));
+                    //只拦截DeclaredMethod方法
+                    builder = builder.visit(Advice.to(InstanceMethodSpendAdviceInterceptor.class).on(ElementMatchers.isMethod().and(ElementMatchers.not(ElementMatchers.<MethodDescription>isStatic()))));
+                    //拦截所有的，包括从父类继承过来的
                     builder = builder.method(ElementMatchers.named("print").and(ElementMatchers.takesArguments(1)))
                             .intercept(Advice.to(StaticMethodSpendAdviceInterceptor.class));
                 }catch (Exception e){

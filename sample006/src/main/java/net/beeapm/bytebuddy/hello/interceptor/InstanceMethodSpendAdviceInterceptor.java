@@ -14,9 +14,8 @@ import java.lang.reflect.Method;
 public class InstanceMethodSpendAdviceInterceptor {
     @Advice.OnMethodEnter()
     public static void enter(@Advice.Local("startTime") Long startTime, @Advice.Origin Method m, @Advice.This Object ths) throws Throwable {
-        System.out.println("---[BEGIN] InstanceMethodSpendAdviceInterceptor");
+        System.out.println("---[BEGIN] InstanceMethodSpendAdviceInterceptor--"+ths.getClass().getName()+"."+m.getName());
         startTime = System.currentTimeMillis();
-        System.out.println("  --------"+ths.toString());
     }
 
     @Advice.OnMethodExit()
