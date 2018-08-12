@@ -13,11 +13,21 @@ import java.lang.reflect.Method;
  */
 public class InstanceMethodSpendAdviceInterceptor {
     @Advice.OnMethodEnter()
-    public static void enter(@Advice.Local("startTime") Long startTime, @Advice.Origin Method m, @Advice.This Object ths) throws Throwable {
+    public static void enter(@Advice.Local("startTime") Long startTime,
+                             @Advice.Origin Method m,
+                             @Advice.This Object ths,
+                             @Advice.AllArguments Object[] allArgs,
+                             @Advice.Origin("#t") String className,
+                             @Advice.Origin("#m") String methodName,
+                             @Advice.Origin("#s") String signature
+    ) throws Throwable {
         System.out.println("---[BEGIN] InstanceMethodSpendAdviceInterceptor");
         System.out.println(InstanceMethodSpendAdviceInterceptor.class.getName());
         startTime = System.currentTimeMillis();
         System.out.println("  --------"+ths.toString());
+        System.out.println("  --------className="+className);
+        System.out.println("  --------methodName="+methodName);
+        System.out.println("  --------signature="+signature);
     }
 
     /**

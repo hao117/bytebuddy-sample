@@ -13,9 +13,18 @@ import java.lang.reflect.Method;
  */
 public class StaticMethodSpendAdviceInterceptor {
     @Advice.OnMethodEnter()
-    public static void enter(@Advice.Local("startTime") Long startTime,@Advice.Origin Method m, @Advice.Origin Class clz) throws Throwable {
-        System.out.println("---[BEGIN] InstanceMethodSpendAdviceInterceptor");
-        System.out.println("  ----------"+clz.getName());
+    public static void enter(@Advice.Local("startTime") Long startTime,
+                             @Advice.Origin Method m,
+                             @Advice.Origin Object clz,
+                             @Advice.Origin("#t") String className,
+                             @Advice.Origin("#m") String methodName,
+                             @Advice.Origin("#s") String signature
+    ) throws Throwable {
+        System.out.println("---[BEGIN] StaticMethodSpendAdviceInterceptor");
+        System.out.println("  ----------"+clz);
+        System.out.println("  ----------className="+className);
+        System.out.println("  ----------methodName="+methodName);
+        System.out.println("  ----------signature="+signature);
         startTime = System.currentTimeMillis();
     }
 
@@ -27,7 +36,7 @@ public class StaticMethodSpendAdviceInterceptor {
     @Advice.OnMethodExit()
     public static void exit(@Advice.Local("startTime") Long startTime) throws Throwable {
         System.out.println("  ==============>spend="+(System.currentTimeMillis()-startTime));
-        System.out.println("---[END] InstanceMethodSpendAdviceInterceptor");
+        System.out.println("---[END] StaticMethodSpendAdviceInterceptor");
     }
 
 }

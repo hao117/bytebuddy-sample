@@ -6,6 +6,7 @@ public class MainTest007 {
     public static void main(String[] args) throws Exception {
         HelloDemo hi = new HelloDemo();
         System.out.println("return result ====="+hi.sayHello("tom"));
+        hi.sayHello();
         System.out.println("\n---------------------------------------------------------------------------------------");
         HelloDemo.print("Tom is a stupid cat");
     }

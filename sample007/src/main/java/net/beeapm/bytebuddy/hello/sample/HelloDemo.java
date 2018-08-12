@@ -20,6 +20,11 @@ public class HelloDemo {
         return say;
     }
 
+    public String sayHello(){
+        System.out.println("---------------------------no params-------->sayHello");
+        return null;
+    }
+
     public static void print(String context){
         try {
             context = context.concat("--555---");

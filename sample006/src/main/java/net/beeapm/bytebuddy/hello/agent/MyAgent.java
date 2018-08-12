@@ -1,6 +1,7 @@
 package net.beeapm.bytebuddy.hello.agent;
 
 import net.beeapm.bytebuddy.hello.interceptor.InstanceMethodSpendAdviceInterceptor;
+import net.beeapm.bytebuddy.hello.interceptor.InstanceMethodSpendAdviceInterceptor2;
 import net.beeapm.bytebuddy.hello.interceptor.StaticMethodSpendAdviceInterceptor;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;
@@ -42,6 +43,8 @@ public class MyAgent {
                     //        .intercept(Advice.to(InstanceMethodSpendAdviceInterceptor.class));
                     //只拦截DeclaredMethod方法
                     builder = builder.visit(Advice.to(InstanceMethodSpendAdviceInterceptor.class).on(ElementMatchers.isMethod().and(ElementMatchers.not(ElementMatchers.<MethodDescription>isStatic()))));
+                    builder = builder.visit(Advice.to(InstanceMethodSpendAdviceInterceptor2.class).on(ElementMatchers.isMethod().and(ElementMatchers.not(ElementMatchers.<MethodDescription>isStatic()))));
+
                     //拦截所有的，包括从父类继承过来的
                     builder = builder.method(ElementMatchers.named("print").and(ElementMatchers.takesArguments(1)))
                             .intercept(Advice.to(StaticMethodSpendAdviceInterceptor.class));
