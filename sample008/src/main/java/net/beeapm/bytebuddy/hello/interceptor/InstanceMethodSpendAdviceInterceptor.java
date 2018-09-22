@@ -38,12 +38,15 @@ public class InstanceMethodSpendAdviceInterceptor {
      * @param t
      */
     @Advice.OnMethodExit(onThrowable = Throwable.class)
-    public static void exit(@Advice.Local("startTime") Long startTime, @Advice.Return(readOnly = false) String result, @Advice.Thrown Throwable t){
+    public static void exit(@Advice.Local("startTime") Long startTime,
+                            @Advice.Return Object result,
+                            @Advice.Origin("#r") String returnType,
+                            @Advice.Thrown Throwable t){
         if(t != null){
             t.printStackTrace();
         }
-        System.out.println("------------"+result);
-        result = result + " @advice";
+        System.out.println("------------returnType>>>>>>>>>>>>>>>>>>>>"+returnType);
+        System.out.println("------------result>>>>>>>>>>>>>>>>>>>>"+result);
         System.out.println("  ==============>spend="+(System.currentTimeMillis()-startTime));
         System.out.println("---[END] InstanceMethodSpendAdviceInterceptor");
         //return  result;

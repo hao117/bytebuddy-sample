@@ -1,8 +1,10 @@
 package net.beeapm.bytebuddy.hello.agent;
 
-import net.beeapm.bytebuddy.hello.interceptor.InstanceMethodSpendAdviceInterceptor;
+import net.beeapm.bytebuddy.hello.interceptor.MyAdvice;
+import net.beeapm.bytebuddy.hello.interceptor.MyAdvice2;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;
+import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -32,21 +34,40 @@ public class MyAgent {
                 String className = typeDescription.getCanonicalName();
                 System.out.println("++++++++ class name = " + className);
                 try {
-                    //入参长度为1的任何方法
-                    builder = builder.method(ElementMatchers.isMethod().and(ElementMatchers.named("sayHello").and(ElementMatchers.takesArguments(1))))
-                            .intercept(Advice.to(InstanceMethodSpendAdviceInterceptor.class));
+                    //构造函数拦截
+                    builder = builder.visit(Advice.to(MyAdvice.class).on(ElementMatchers.isMethod().and(ElementMatchers.<MethodDescription>nameStartsWith("method"))));
                 }catch (Exception e){
-
+                    e.printStackTrace();
                 }
                 return builder;
             }
         };
-        new AgentBuilder.Default()
+        AgentBuilder.Transformer transformer2 = new AgentBuilder.Transformer() {
+            @Override
+            public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder,
+                                                    TypeDescription typeDescription,
+                                                    ClassLoader classLoader, JavaModule javaModule){
+                String className = typeDescription.getCanonicalName();
+                System.out.println("++++++++ class name = " + className);
+                try {
+                    //构造函数拦截
+                    builder = builder.visit(Advice.to(MyAdvice2.class).on(ElementMatchers.isMethod().and(ElementMatchers.<MethodDescription>nameStartsWith("method"))));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return builder;
+            }
+        };
+
+
+        AgentBuilder agentBuilder =  new AgentBuilder.Default()
                 .with(new MyListener())
                 .with(AgentBuilder.Listener.StreamWriting.toSystemError())
-                .ignore(ElementMatchers.<TypeDescription>none().and(ElementMatchers.nameStartsWith("net.bytebuddy.")))
-                .type(ElementMatchers.nameStartsWith("net.beeapm.bytebuddy.hello.sample"))
-                .transform(transformer).installOn(inst);
+                .ignore(ElementMatchers.<TypeDescription>none().and(ElementMatchers.nameStartsWith("net.bytebuddy.")));
+
+        agentBuilder = agentBuilder.type(ElementMatchers.nameStartsWith("net.beeapm.bytebuddy.hello.")).transform(transformer).asDecorator();
+        agentBuilder = agentBuilder.type(ElementMatchers.nameStartsWith("net.beeapm.bytebuddy.hello.sample")).transform(transformer2).asDecorator();
+        agentBuilder.installOn(inst);
         //agentBuilder.installOn(inst);
     }
 

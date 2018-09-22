@@ -21,6 +21,7 @@
         <module>sample007</module>
         <module>sample008</module>
         <module>sample009</module>
+        <module>sample010</module>
     </modules>
 
     <properties>
@@ -32,12 +33,12 @@
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.8.14</version>
+            <version>1.8.20</version>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
-            <version>1.8.14</version>
+            <version>1.8.20</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
