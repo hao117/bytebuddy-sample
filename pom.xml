@@ -22,6 +22,7 @@
         <module>sample008</module>
         <module>sample009</module>
         <module>sample010</module>
+        <module>sample011</module>
     </modules>
 
     <properties>
